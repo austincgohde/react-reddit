@@ -10,6 +10,6 @@ const StoreInstance = Store();
 ReactDOM.render(
   <Provider store={StoreInstance}>
    <App />
- </Provider>,
+  </Provider>,
   document.getElementById('root')
 );
