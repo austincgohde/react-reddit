@@ -1,12 +1,28 @@
 import React, { Component } from 'react';
 
+import PostCompose from './PostCompose';
+
 class Main extends Component {
+
+  state = {
+    formToggle: false
+  }
+
+  handleFormToggle = () => {
+    this.setState({ formToggle: !this.state.formToggle})
+  }
+
   render () {
+
+    let formToggler = this.state.formToggle ? <PostCompose /> : null
     return (
       <div>
         <main className="container">
           <div className="pull-right">
-            <p><a className="btn btn-info">New Post</a></p>
+            <p><a
+                className="btn btn-info"
+                onClick={this.handleFormToggle}
+                >New Post</a></p>
           </div>
           <ul className="nav nav-pills">
             <li role="presentation" className="active">
@@ -20,33 +36,7 @@ class Main extends Component {
               </select>
             </div>
           </ul>
-          <div className="row">
-            <div className="col-md-8">
-              <form>
-                <div>
-                  <label htmlFor="title">Title</label>
-                  <input id="title" className="form-control"/>
-                </div>
-                <div>
-                  <label htmlFor="body">Body</label>
-                  <textarea id="body" className="form-control"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="author">Author</label>
-                  <input id="author" className="form-control"/>
-                </div>
-                <div>
-                  <label htmlFor="image-url">Image URL</label>
-                  <input id="image-url" className="form-control"/>
-                </div>
-                <div className="form-group">
-                  <button type="submit" className="btn btn-primary">
-                    Create Post
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
+          {formToggler}
           <div className="row">
             <div className="col-md-12">
 
