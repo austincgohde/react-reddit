@@ -16,13 +16,15 @@ class Post extends Component {
       votes
     } = this.props.post
 
-    console.log('Comments', this.props.comments)
-
     let comment = this.props.comments.map((c) => {
       if(c.post_id === id) {
         return <Comment key={c.id} comment={c}/>
       }
     })
+
+    let commentCounter = this.props.comments.filter(c => c.post_id === id);
+
+    let counterText = commentCounter.length !== 1 ? "Comments" : "Comment";
 
     return (
       <div className="row">
@@ -49,10 +51,18 @@ class Post extends Component {
                 {created_at}
                 <i className="glyphicon glyphicon-comment"></i>
                 <a>
-                  Some comments
+                  {`${commentCounter.length} ${counterText}`}
                 </a>
               </div>
               {comment}
+              <form className="form-inline">
+                <div className="form-group">
+                  <input className="form-control"/>
+                </div>
+                <div className="form-group">
+                  <input type="submit" className="btn btn-primary"/>
+                </div>
+              </form>
             </div>
           </div>
         </div>
