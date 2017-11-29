@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 
 import PostCompose from './PostCompose';
+import Post from './Post';
 
 class Main extends Component {
 
@@ -15,6 +18,9 @@ class Main extends Component {
   render () {
 
     let formToggler = this.state.formToggle ? <PostCompose /> : null
+
+    let postList = this.props.posts.map(post => <Post key={post.id} post={post} />)
+
     return (
       <div>
         <main className="container">
@@ -37,59 +43,18 @@ class Main extends Component {
             </div>
           </ul>
           {formToggler}
-          <div className="row">
-            <div className="col-md-12">
-
-              <div className="well">
-                <div className="media-left">
-                  <img className="media-object" alt="explanation"/>
-                </div>
-                <div className="media-body">
-                  <h4 className="media-heading">
-                    Some Text
-                    |
-                    <a><i className="glyphicon glyphicon-arrow-up"></i></a>
-                    <a><i className="glyphicon glyphicon-arrow-down"></i></a>
-                    10
-                  </h4>
-                  <div className="text-right">
-                    Some Author
-                  </div>
-                  <p>
-                    Some text
-                  </p>
-                  <div>
-                    Some time ago
-                    |
-                    <i className="glyphicon glyphicon-comment"></i>
-                    <a>
-                      Some comments
-                    </a>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-offset-1">
-                      <hr/>
-                      <p>
-                        Comment text
-                      </p>
-                      <form className="form-inline">
-                        <div className="form-group">
-                          <input className="form-control"/>
-                        </div>
-                        <div className="form-group">
-                          <input type="submit" className="btn btn-primary"/>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {postList}
         </main>
       </div>
     )
   }
 }
 
-export default Main;
+function mapStateToProps(store, props) {
+  console.log('store', store);
+  return {
+    posts: store.posts
+  }
+}
+
+export default connect(mapStateToProps, null)(Main);
