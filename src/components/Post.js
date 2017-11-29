@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Moment from 'react-moment';
 import { connect } from 'react-redux';
 
 import Comment from './Comment';
@@ -48,7 +49,7 @@ class Post extends Component {
                 {content}
               </p>
               <div>
-                {created_at}
+                <Moment fromNow>{created_at}</Moment>
                 <i className="glyphicon glyphicon-comment"></i>
                 <a>
                   {`${commentCounter.length} ${counterText}`}
