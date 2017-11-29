@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { createPost } from '../actions/posts';
+
 class PostCompose extends Component {
 
   state = {
     title: "",
     author: "",
     image: "",
-    description: ""
+    content: "",
+    votes: 0
   }
 
   handleFormChanges = (e) => {
@@ -17,8 +22,13 @@ class PostCompose extends Component {
     } else if(e.target.id === "image-url") {
       this.setState({ image: e.target.value })
     } else if(e.target.id === "body") {
-      this.setState({ description: e.target.value })
+      this.setState({ content: e.target.value })
     }
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.createPost(this.state)
   }
 
   render () {
@@ -26,12 +36,14 @@ class PostCompose extends Component {
     let isFormValid = this.state.title !== ""
                    && this.state.author !== ""
                    && this.state.image !== ""
-                   && this.state.description !== "" ? "" : "disabled"
+                   && this.state.content !== "" ? "" : "disabled"
 
     return (
       <div className="row">
         <div className="col-md-8">
-          <form>
+          <form
+            onSubmit={this.handleSubmit}
+            >
             <div>
               <label htmlFor="title">Title</label>
               <input
@@ -46,7 +58,7 @@ class PostCompose extends Component {
               <textarea
                 id="body"
                 className="form-control"
-                value={this.state.description}
+                value={this.state.content}
                 onChange={this.handleFormChanges}
                 ></textarea>
             </div>
@@ -84,4 +96,10 @@ class PostCompose extends Component {
   }
 }
 
-export default PostCompose
+function mapDispatchToProps(dispatch) {
+  return {
+    createPost: bindActionCreators(createPost, dispatch)
+  }
+}
+
+export default connect(null, mapDispatchToProps)(PostCompose)

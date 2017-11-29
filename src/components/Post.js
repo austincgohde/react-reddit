@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
+
+import Comment from './Comment';
 
 class Post extends Component {
   render () {
 
     let {
+      id,
       author,
       title,
       content,
@@ -11,6 +15,14 @@ class Post extends Component {
       image_url,
       votes
     } = this.props.post
+
+    console.log('Comments', this.props.comments)
+
+    let comment = this.props.comments.map((c) => {
+      if(c.post_id === id) {
+        return <Comment key={c.id} comment={c}/>
+      }
+    })
 
     return (
       <div className="row">
@@ -40,22 +52,7 @@ class Post extends Component {
                   Some comments
                 </a>
               </div>
-              <div className="row">
-                <div className="col-md-offset-1">
-                  <hr/>
-                  <p>
-                    Comment text
-                  </p>
-                  <form className="form-inline">
-                    <div className="form-group">
-                      <input className="form-control"/>
-                    </div>
-                    <div className="form-group">
-                      <input type="submit" className="btn btn-primary"/>
-                    </div>
-                  </form>
-                </div>
-              </div>
+              {comment}
             </div>
           </div>
         </div>
@@ -64,4 +61,10 @@ class Post extends Component {
   }
 }
 
-export default Post
+function mapStateToProps(store, props) {
+  return {
+    comments: store.comments
+  }
+}
+
+export default connect(mapStateToProps, null)(Post)

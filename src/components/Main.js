@@ -51,7 +51,6 @@ class Main extends Component {
 }
 
 function mapStateToProps(store, props) {
-  console.log('store', store);
   return {
     posts: store.posts
   }
