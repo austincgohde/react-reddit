@@ -1,6 +1,8 @@
 import {
   GET_COMMENTS_PENDING,
-  GET_COMMENTS_SUCCESS
+  GET_COMMENTS_SUCCESS,
+  ADD_COMMENT_PENDING,
+  ADD_COMMENT_SUCCESS
 } from '../actions/comments';
 
 export default( state = [], action ) => {
@@ -9,6 +11,10 @@ export default( state = [], action ) => {
       return state;
     case GET_COMMENTS_SUCCESS:
       return [...state].concat(action.payload.data);
+    case ADD_COMMENT_PENDING:
+      return state;
+    case ADD_COMMENT_SUCCESS:
+      return [...action.payload.data]
     default :
       return state;
   }
